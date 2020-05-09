@@ -5,7 +5,8 @@ This repository contains the source code for Kwon et al. "Deep Learning Algorith
 
 ### Patient selection
 The inclusion and exclusion criteria for patient selection is summarized in the figure below.
-![Patient demographics]("figures/Figure 1. Patient Selection.png")
+
+![Patient demographics](figures/Figure 1. Patient Selection.png)
 
 ### Architecture
 The main algorithm used inthis paper is the DenseNet-121 pre-trained on ImageNet, similar to the algorithm utilized in the [CheXNet](https://stanfordmlgroup.github.io/projects/chexnet/) paper. The train / validation / test split is summarized by the figure below.
