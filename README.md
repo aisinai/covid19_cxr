@@ -6,18 +6,12 @@ This repository contains the source code for Kwon et al. "Deep Learning Algorith
 ### Patient selection
 The inclusion and exclusion criteria for patient selection is summarized in the figure below.
 
-![Patient demographics](figures/Figure 1. Patient Selection.png)
+![Patient demographics](figures/Figure%201.%20Patient%20Selection.png)
 
 ### Architecture
 The main algorithm used inthis paper is the DenseNet-121 pre-trained on ImageNet, similar to the algorithm utilized in the [CheXNet](https://stanfordmlgroup.github.io/projects/chexnet/) paper. The train / validation / test split is summarized by the figure below.
 
-![Data distribution and network architecture]("figures/Figure 2. Data-Preprocessing.png")
-
-Two levels of convolution based encoding captures both local (first-layer) and global (second-layer) features. 
-
-![VQ VAE Multi-Level Architecture](figures/VQ_VAE_Multi-Level_Architecture.png)
-
-We converted our datasets into [HDF5 formats](https://portal.hdfgroup.org/display/HDF5/HDF5) as inputs for faster training. We used the [MIMIC-CXR](https://physionet.org/content/mimic-cxr/2.0.0/) and the [CheXpert](https://stanfordmlgroup.github.io/competitions/chexpert/) datasets for training and external validation.
+![Data distribution and network architecture](figures/Figure%202.%20Data-Preprocessing.png)
 
 ### Prerequisites
 
@@ -52,7 +46,7 @@ python train_densenet.py --data_path=[HDF5 TRAIN DATASET PATH] --save_path=[SAVE
 
 We trained using both the severity scores and the 30-day admission status to predict severity scores, 30-day admission status, 30-day intubation status, and 30-day mortality.
 
-![Training graphs]("figures/Figure 3. Loss Function, Model Selection, AUROCs.png")
+![Training graphs](figures/Figure%203.%20Loss%20Function%2C%20Model%20Selection%2C%20AUROCs.png)
 
 ### Testing
 
@@ -60,9 +54,9 @@ We trained using both the severity scores and the 30-day admission status to pre
 * create AUROC (area under the receiver operating characteristic curve) plots on the test set
 * create PR (precision recall) curves on the test set
 
-![AUROCs]("figures/Figure 4. AUROC of Test.png")
+![AUROCs](figures/Figure%204.%20AUROC%20of%20Test.png)
 
-![RC curves]("figures/Figure 5. Precision-Recall Curves.png")
+![RC curves](figures/Figure%205.%20Precision-Recall%20Curves.png)
 
 2. Use the `heatmap.py` to create desired heatmap of a radiograph:
 
@@ -70,7 +64,7 @@ We trained using both the severity scores and the 30-day admission status to pre
 python heatmap.py --index=[index of radiograph]
 ```
 
-![Heatmaps]("figures/Figure 6. Heatmap.png")
+![Heatmaps](figures/Figure%206.%20Heatmap.png)
 
 ### Results
 
