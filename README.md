@@ -1,4 +1,4 @@
-# DL Algorithm for Prediction of Clinical Outcoems of COVID-19 Patients
+# DL Algorithm for Prediction of Clinical Outcomes of COVID-19 Patients
 This repository contains the source code for Kwon et al. "Deep Learning Algorithm Predicts Clinical Outcomes of COVID-19 Patients Based on Initial Chest Radiographs from the Emergency Department" submitted to *Radiology*. This algorithm was trained and tested on 389 radiographs that were evaluated by fellowship trained, board certified radiologists. 
 
 ## Usage
