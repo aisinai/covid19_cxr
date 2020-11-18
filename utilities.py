@@ -82,9 +82,6 @@ class CXRDataset(Dataset):
         image = Image.open(image_name).convert("RGB")
         if self.transform is not None:
             image = self.transform(image)
-            mean = torch.FloatTensor([0.485, 0.456, 0.406]).reshape(3, 1, 1)
-            std = torch.FloatTensor([0.229, 0.224, 0.225]).reshape(3, 1, 1)
-            image = image * std + mean
         score = self.scores[index]
         admit = self.admits[index]
         intub = self.intubs[index]

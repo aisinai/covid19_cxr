@@ -16,14 +16,14 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--size', type=int, default=1024)
 parser.add_argument('--n_epochs', type=int, default=200)
 parser.add_argument('--n_classes', type=int, default=1)
-parser.add_argument("--lr", type=float, default=1e-5, help="adam: learning rate")
+parser.add_argument("--lr", type=float, default=1e-6, help="adam: learning rate")
 parser.add_argument("--b1", type=float, default=0.99, help="adam: decay of first order momentum of gradient")
 parser.add_argument("--b2", type=float, default=0.9999, help="adam: decay of first order momentum of gradient")
 parser.add_argument("--weight_decay", type=float, default=1e-5, help="adam: weight decay (L2 penalty)")
 parser.add_argument('--data_path', type=str, default="/home/aisinai/work/HDF5_datasets")
-parser.add_argument('--save_path', type=str, default="/home/aisinai/work/covid19/densenet121/20200507")
+parser.add_argument('--save_path', type=str, default="/home/aisinai/work/covid19/densenet121/20200717")
 parser.add_argument('--mode', type=str, default="score")
-parser.add_argument('--train_run', type=str, default="0")
+parser.add_argument('--train_run', type=str, default="score3")
 args = parser.parse_args()
 print(args)
 torch.manual_seed(816)
@@ -38,8 +38,6 @@ with open(f'{save_path}/args.txt', 'w') as f:
 model = models.densenet121(pretrained=True)
 num_ftrs = model.classifier.in_features
 model.classifier = nn.Sequential(nn.Linear(num_ftrs, 1), nn.Sigmoid())
-
-os.makedirs(save_path, exist_ok=True)
 model = model.cuda() if cuda else model
 n_gpu = torch.cuda.device_count()
 if n_gpu > 1:
@@ -76,6 +74,7 @@ for epoch in range(args.n_epochs):
         preds = torch.FloatTensor().cuda() if cuda else torch.FloatTensor()
 
         for i, (img, score, admit, intub, death) in enumerate(loader):
+            scores = torch.cat((scores, score), 0)
             admits = torch.cat((admits, admit), 0)
             intubs = torch.cat((intubs, intub), 0)
             deaths = torch.cat((deaths, death), 0)
@@ -86,7 +85,6 @@ for epoch in range(args.n_epochs):
                 real_targets = Variable(admit.cuda()).float() if cuda else Variable(score).float()
             with torch.set_grad_enabled(phase == 'train'):
                 output_C = torch.squeeze(model(real_img))
-                scores = torch.cat((scores, score), 0)
                 preds = torch.cat((preds, output_C), 0)
                 # calculate gradient and update parameters in train phase
                 optimizer.zero_grad()

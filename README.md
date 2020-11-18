@@ -1,17 +1,14 @@
 # DL Algorithm for Prediction of Clinical Outcomes of COVID-19 Patients
-This repository contains the source code for Kwon et al. "Deep Learning Algorithm Predicts Clinical Outcomes of COVID-19 Patients Based on Initial Chest Radiographs from the Emergency Department" submitted to *Radiology*. This algorithm was trained and tested on 389 radiographs that were evaluated by fellowship trained, board certified radiologists. 
+This repository contains the source code for Kwon et al. "Deep Learning Algorithm Predicts Clinical Outcomes of COVID-19 Patients Based on Initial Chest Radiographs from the Emergency Department" submitted to *Radiology: Artificial Intelligence*. This algorithm was trained and tested on 499 total radiographs that were evaluated by fellowship trained, board certified radiologists. 
 
 ## Usage
 
 ### Patient selection
-The inclusion and exclusion criteria for patient selection is summarized in the figure below.
-
-![Patient demographics](figures/Figure%201.%20Patient%20Selection.png)
+Patients with any CXR and routine laboratory tests from the initial emergency department encounter may be used. 
 
 ### Architecture
 The main algorithm used inthis paper is the DenseNet-121 pre-trained on ImageNet, similar to the algorithm utilized in the [CheXNet](https://stanfordmlgroup.github.io/projects/chexnet/) paper. The train / validation / test split is summarized by the figure below.
 
-![Data distribution and network architecture](figures/Figure%202.%20Data-Preprocessing.png)
 
 ### Prerequisites
 
@@ -46,7 +43,7 @@ python train_densenet.py --data_path=[HDF5 TRAIN DATASET PATH] --save_path=[SAVE
 
 We trained using both the severity scores and the 30-day admission status to predict severity scores, 30-day admission status, 30-day intubation status, and 30-day mortality.
 
-![Training graphs](figures/Figure%203.%20Loss%20Function%2C%20Model%20Selection%2C%20AUROCs.png)
+2. To prepare experiments with EHR, we used the code from [Nvidia](https://gitlab.com/nvidia/sa/covid-fl/-/tree/master/fed_learn) that is available with the [Clara Software Development Kit (SDK)](https://developer.nvidia.com/clara)
 
 ### Testing
 
@@ -54,9 +51,6 @@ We trained using both the severity scores and the 30-day admission status to pre
 * create AUROC (area under the receiver operating characteristic curve) plots on the test set
 * create PR (precision recall) curves on the test set
 
-![AUROCs](figures/Figure%204.%20AUROC%20of%20Test.png)
-
-![RC curves](figures/Figure%205.%20Precision-Recall%20Curves.png)
 
 2. Use the `heatmap.py` to create desired heatmap of a radiograph:
 
@@ -64,13 +58,12 @@ We trained using both the severity scores and the 30-day admission status to pre
 python heatmap.py --index=[index of radiograph]
 ```
 
-![Heatmaps](figures/Figure%206.%20Heatmap.png)
 
 ### Results
 
-1. The model trained on the CXR severity score produced AUROCs of 0.85, 0.92, 0.75, 0.83 for the CXR severity score, admission, intubation, and death, respectively. 
+1. Performance of prediction of intubation (AUC, 0.88) and death (AUC, 0.82) increased with incorporation of relevant clinical variables from electronic health records acquired exclusively from the emergency department encounter.
 
-2. The model had decreased precision and recall in predicting intubation and death, rare events in both training and test data, but performed better than a naive classifier and had superior negative predictive value and specificity.  
+2. The model, despite training with only young patients aged 21 to 50, generalized to a pseudo-prospective test set that also contained older patients aged greater than 50.
 
 
 ## Contributors

@@ -4,17 +4,13 @@ import os
 from torchvision import transforms
 from utilities import CXRDataset
 
-#########################
-# GENERATE HDF5 DATASET #
-# ########################
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--img_size", type=int, default=1024)
 parser.add_argument("--crop_size", type=int, default=1024)
 args = parser.parse_args()
 
-IMG_DIR = "/home/aisinai/work/covid19"
+IMG_DIR = "/home/aisinai/work/covid19/images"
 DATA_DIR = "/home/aisinai/work/covid19"
 HDF5_DIR = "/home/aisinai/work/HDF5_datasets"
 os.makedirs(HDF5_DIR, exist_ok=True)
@@ -29,7 +25,8 @@ transform_array = [transforms.Resize(args.img_size),
                    normalization]
 
 # Generate HDF5 dataset
-for mode in ["train", "valid", "test"]:
+# for mode in ["train", "valid", "test"]:
+for mode in ["test"]:
     list_file = os.path.join(DATA_DIR, f"{mode}.csv")
     dataset = CXRDataset(img_dir=IMG_DIR,
                          list_file=list_file,
